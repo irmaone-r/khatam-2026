@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khatam Hub - Rika & Azka</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #F8FAFC;
+        }
+        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+        .juz-card { transition: all 0.3s ease; }
+        .juz-card:active { scale: 0.98; }
+        textarea { resize: none; }
+    </style>
+</head>
+<body class="pb-10">
+
+    <!-- Header Section -->
+    <div class="bg-emerald-800 text-white p-6 rounded-b-[2.5rem] shadow-xl sticky top-0 z-50">
+        <div class="max-w-md mx-auto">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h1 class="text-2xl font-black tracking-tighter">🌙 KHATAM HUB</h1>
+                    <p class="text-[9px] font-bold opacity-70 tracking-widest uppercase mt-1">⚡ LIVE SYNC ACTIVE</p>
+                </div>
+                <div id="countdown" class="flex gap-2">
+                    <!-- Countdown content -->
+                </div>
+            </div>
+            <div class="bg-emerald-900/40 p-3 rounded-2xl border border-emerald-700/50">
+                <p id="daily-quote" class="text-[11px] italic opacity-90">"Besok Ramadhan tiba! Semangat tadarusnya sayang..."</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-md mx-auto p-4 space-y-5">
+        
+        <!-- Battle Progress Stats -->
+        <section class="bg-white p-5 rounded-[2.5rem] card-shadow border border-slate-100">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-[10px] font-black uppercase text-slate-400 tracking-widest">📊 Battle Progress</h3>
+                <span id="day-badge" class="bg-emerald-50 text-emerald-700 text-[10px] font-black px-3 py-1 rounded-full">Ramadhan Day 1</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <!-- Rika Box -->
+                <div class="bg-emerald-50/50 p-4 rounded-3xl border border-emerald-100 text-center">
+                    <p class="text-[10px] font-black text-emerald-800 opacity-60 uppercase mb-1">❤️ Rika</p>
+                    <div class="py-1">
+                        <span id="rika-count" class="text-4xl font-black text-emerald-600">0</span>
+                        <span class="text-xs text-emerald-300 font-bold">/30</span>
+                    </div>
+                    <div class="h-1.5 bg-emerald-100 rounded-full mt-2 overflow-hidden">
+                        <div id="rika-bar" class="h-full bg-emerald-500 transition-all duration-1000 w-0"></div>
+                    </div>
+                </div>
+                <!-- Azka Box -->
+                <div class="bg-blue-50/50 p-4 rounded-3xl border border-blue-100 text-center">
+                    <p class="text-[10px] font-black text-blue-800 opacity-60 uppercase mb-1">⚡ Azka</p>
+                    <div class="py-1">
+                        <span id="azka-count" class="text-4xl font-black text-blue-600">0</span>
+                        <span class="text-xs text-blue-300 font-bold">/30</span>
+                    </div>
+                    <div class="h-1.5 bg-blue-100 rounded-full mt-2 overflow-hidden">
+                        <div id="azka-bar" class="h-full bg-blue-500 transition-all duration-1000 w-0"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Status Alert -->
+        <div id="status-alert" class="bg-slate-900 text-white p-5 rounded-3xl flex items-center gap-4 border-l-4 border-emerald-500">
+            <span class="text-2xl">💬</span>
+            <div>
+                <h4 id="status-title" class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">SIAP BERAKSI?</h4>
+                <p id="status-desc" class="text-xs font-semibold opacity-90">Ramadhan dimulai besok! Yuk tadarus bareng.</p>
+            </div>
+        </div>
+
+        <!-- Checklist Juz -->
+        <div id="juz-container" class="grid gap-3">
+            <!-- Juz items will be injected here -->
+        </div>
+
+        <!-- Interaction Area (Real-time Notes) -->
+        <section class="bg-white p-6 rounded-[2.5rem] card-shadow border border-slate-100 space-y-4">
+            <h3 class="text-[10px] font-black uppercase text-slate-400 tracking-widest flex items-center gap-2">💖 Pojok Interaksi</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-[9px] font-black text-slate-400 uppercase mb-1 block">Surat Cinta Rika</label>
+                    <textarea id="note-rika" oninput="updateNote('rika')" placeholder="Tulis sesuatu buat Azka..." 
+                        class="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all h-20 shadow-inner"></textarea>
+                </div>
+                <div>
+                    <label class="text-[9px] font-black text-slate-400 uppercase mb-1 block">Surat Cinta Azka</label>
+                    <textarea id="note-azka" oninput="updateNote('azka')" placeholder="Tulis sesuatu buat Rika..." 
+                        class="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all h-20 shadow-inner"></textarea>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, onSnapshot, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'khatam-rika-azka';
+
+        let localState = { rika: {}, azka: {}, notes: { rika: "", azka: "" } };
+        const SURAH_MAP = [
+            "Al-Fatihah - Al-Baqarah 141", "Al-Baqarah 142 - 252", "Al-Baqarah 253 - Ali 'Imran 92",
+            "Ali 'Imran 93 - An-Nisa 23", "An-Nisa 24 - 147", "An-Nisa 148 - Al-Ma'idah 81",
+            "Al-Ma'idah 82 - Al-An'am 110", "Al-An'am 111 - Al-A'raf 87", "Al-A'raf 88 - Al-Anfal 40",
+            "Al-Anfal 41 - At-Taubah 92", "At-Taubah 93 - Hud 5", "Hud 6 - Yusuf 52",
+            "Yusuf 53 - Ibrahim 52", "Al-Hijr 1 - An-Nahl 128", "Al-Isra 1 - Al-Kahfi 74",
+            "Al-Kahfi 75 - Ta Ha 135", "Al-Anbiya 1 - Al-Hajj 78", "Al-Mu'minun 1 - Al-Furqan 20",
+            "Al-Furqan 21 - An-Naml 55", "An-Naml 56 - Al-'Ankabut 45", "Al-'Ankabut 46 - Al-Ahzab 30",
+            "Al-Ahzab 31 - Yasin 27", "Yasin 28 - Az-Zumar 31", "Az-Zumar 32 - Fussilat 46",
+            "Fussilat 47 - Al-Jathiyah 37", "Al-Ahqaf 1 - Adh-Dhariyat 30", "Adh-Dhariyat 31 - Al-Hadid 29",
+            "Al-Mujadila 1 - At-Tahrim 12", "Al-Mulk 1 - Al-Mursalat 50", "An-Naba 1 - An-Nas 6"
+        ];
+
+        async function init() {
+            render(); // Initial render with empty/offline data
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'khatam', 'progress');
+                        onSnapshot(docRef, (docSnap) => {
+                            if (docSnap.exists()) {
+                                const data = docSnap.data();
+                                localState.rika = data.rika || {};
+                                localState.azka = data.azka || {};
+                                localState.notes = data.notes || { rika: "", azka: "" };
+                                
+                                if (document.activeElement !== document.getElementById('note-rika')) {
+                                    document.getElementById('note-rika').value = localState.notes.rika || "";
+                                }
+                                if (document.activeElement !== document.getElementById('note-azka')) {
+                                    document.getElementById('note-azka').value = localState.notes.azka || "";
+                                }
+                            }
+                            render();
+                        });
+                    }
+                });
+            } catch (err) {
+                console.error("Connection error, using local state");
+                render();
+            }
+        }
+
+        window.toggleJuz = async function(juzId, person) {
+            localState[person] = localState[person] || {};
+            localState[person][juzId] = !localState[person][juzId];
+            render();
+
+            if (!auth.currentUser) return;
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'khatam', 'progress');
+            try {
+                await updateDoc(docRef, { [person]: localState[person] });
+            } catch (e) {
+                await setDoc(docRef, localState);
+            }
+        };
+
+        let noteTimeout;
+        window.updateNote = function(person) {
+            const val = document.getElementById(`note-${person}`).value;
+            localState.notes[person] = val;
+            clearTimeout(noteTimeout);
+            noteTimeout = setTimeout(async () => {
+                if (!auth.currentUser) return;
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'khatam', 'progress');
+                await updateDoc(docRef, { notes: localState.notes });
+            }, 800);
+        };
+
+        function updateCountdown() {
+            const START_TARGET = new Date('2026-02-19T00:00:00');
+            const now = new Date();
+            const distance = START_TARGET.getTime() - now.getTime();
+            
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('countdown').innerHTML = `
+                    <div class="bg-white/10 px-3 py-1.5 rounded-xl text-center border border-white/20"><span class="text-sm block font-black leading-none">${days}</span><span class="text-[7px] opacity-60 uppercase">Hari</span></div>
+                    <div class="bg-white/10 px-3 py-1.5 rounded-xl text-center border border-white/20"><span class="text-sm block font-black leading-none">${hours}</span><span class="text-[7px] opacity-60 uppercase">Jam</span></div>
+                `;
+                document.getElementById('day-badge').innerText = `H-1 Ramadhan`;
+                return 0; 
+            } else {
+                const diffTime = now.getTime() - START_TARGET.getTime();
+                let day = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                day = Math.max(1, Math.min(30, day));
+                document.getElementById('day-badge').innerText = `Ramadhan Day ${day}`;
+                document.getElementById('countdown').innerHTML = `<span class="bg-emerald-500/20 px-3 py-1 rounded-full text-[10px] font-black border border-emerald-400">AKTIF</span>`;
+                return day;
+            }
+        }
+
+        function render() {
+            const container = document.getElementById('juz-container');
+            const currentDay = updateCountdown();
+            container.innerHTML = '';
+
+            let rikaTotal = 0;
+            let azkaTotal = 0;
+
+            for (let i = 1; i <= 30; i++) {
+                const doneRika = localState.rika && localState.rika[i];
+                const doneAzka = localState.azka && localState.azka[i];
+                if (doneRika) rikaTotal++;
+                if (doneAzka) azkaTotal++;
+
+                const isTarget = (currentDay > 0 && i === currentDay);
+                const item = document.createElement('div');
+                item.className = `bg-white p-4 rounded-[1.8rem] border-2 transition-all flex items-center justify-between shadow-sm ${doneRika && doneAzka ? 'border-emerald-500 bg-emerald-50/20' : isTarget ? 'border-yellow-400 bg-yellow-50/50' : 'border-slate-50'}`;
+                
+                item.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm ${doneRika && doneAzka ? 'bg-emerald-600 text-white shadow-lg' : isTarget ? 'bg-yellow-400 text-yellow-900 shadow-md' : 'bg-slate-100 text-slate-400'}">
+                            ${i}
+                        </div>
+                        <div class="max-w-[120px]">
+                            <p class="text-[10px] font-black text-slate-800 uppercase leading-none mb-1">Juz ${i}</p>
+                            <p class="text-[8px] text-slate-400 font-bold truncate">${SURAH_MAP[i-1]}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="toggleJuz(${i}, 'rika')" class="flex flex-col items-center gap-0.5">
+                            <div class="w-10 h-10 rounded-2xl flex items-center justify-center transition-all ${doneRika ? 'bg-emerald-500 text-white shadow-md' : 'bg-slate-100 text-slate-200'}">
+                                ${doneRika ? '✅' : '❤️'}
+                            </div>
+                            <span class="text-[7px] font-black text-slate-400 uppercase">RIKA</span>
+                        </button>
+                        <button onclick="toggleJuz(${i}, 'azka')" class="flex flex-col items-center gap-0.5">
+                            <div class="w-10 h-10 rounded-2xl flex items-center justify-center transition-all ${doneAzka ? 'bg-blue-500 text-white shadow-md' : 'bg-slate-100 text-slate-200'}">
+                                ${doneAzka ? '✅' : '⚡'}
+                            </div>
+                            <span class="text-[7px] font-black text-slate-400 uppercase">AZKA</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+            }
+
+            document.getElementById('rika-count').innerText = rikaTotal;
+            document.getElementById('azka-count').innerText = azkaTotal;
+            document.getElementById('rika-bar').style.width = `${(rikaTotal/30)*100}%`;
+            document.getElementById('azka-bar').style.width = `${(azkaTotal/30)*100}%`;
+            
+            updateStatusText(rikaTotal, azkaTotal, currentDay === 0);
+        }
+
+        function updateStatusText(rika, azka, preRamadhan) {
+            const title = document.getElementById('status-title');
+            const desc = document.getElementById('status-desc');
+            if (preRamadhan) {
+                title.innerText = "SIAP BERAKSI?";
+                desc.innerText = "Besok mulai perjuangannya ya sayang!";
+                return;
+            }
+            if (rika > azka) {
+                title.innerText = "RIKA MEMIMPIN!";
+                desc.innerText = "Azka jangan mau kalah, ayo semangatt!";
+            } else if (azka > rika) {
+                title.innerText = "AZKA LAGI NGEBUT!";
+                desc.innerText = "Rika pelan-pelan asal khatam ya sayang!";
+            } else {
+                title.innerText = "KOMPAK BANGET!";
+                desc.innerText = "Progres kalian sama, makin romantis nih!";
+            }
+        }
+
+        init();
+        setInterval(updateCountdown, 60000);
+    </script>
+</body>
+</html>
